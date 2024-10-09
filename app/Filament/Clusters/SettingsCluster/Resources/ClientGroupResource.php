@@ -20,6 +20,8 @@ class ClientGroupResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 2;
+
     public static function getNavigationGroup(): ?string
     {
         return __('Clients');

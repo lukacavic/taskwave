@@ -20,6 +20,8 @@ class LeadSourceResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 3;
+
     public static function getNavigationGroup(): ?string
     {
         return __('Leads');

@@ -23,6 +23,8 @@ class TicketSpamFilterResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 8;
+
     public static function getNavigationGroup(): ?string
     {
         return __('Support');

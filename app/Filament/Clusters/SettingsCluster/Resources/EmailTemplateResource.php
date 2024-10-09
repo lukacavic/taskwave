@@ -22,6 +22,7 @@ class EmailTemplateResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 10;
 
     public static function form(Form $form): Form
     {

@@ -24,6 +24,8 @@ class LeadStatusResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 4;
+
     public static function getNavigationGroup(): ?string
     {
         return __('Leads');

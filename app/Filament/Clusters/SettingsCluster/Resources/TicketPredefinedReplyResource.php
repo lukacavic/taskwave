@@ -22,6 +22,8 @@ class TicketPredefinedReplyResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 6;
+
     public static function getNavigationLabel(): string
     {
         return __('Predefined Replies');

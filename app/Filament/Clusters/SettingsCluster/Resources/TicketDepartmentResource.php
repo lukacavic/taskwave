@@ -23,6 +23,8 @@ class TicketDepartmentResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    protected static ?int $navigationSort = 5;
+
     public static function getNavigationLabel(): string
     {
         return __('Departments');
