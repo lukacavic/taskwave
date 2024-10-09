@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\Pages\ClientContacts;
 use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
 use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
@@ -120,6 +121,16 @@ class ClientResource extends Resource
                         return request()->routeIs(ClientOverview::getRouteName());
                     }),
 
+                PageNavigationItem::make(__('Contacts'))
+                    ->icon('heroicon-o-users')
+                    ->url(function () use ($record) {
+                        return static::getUrl('contacts', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientContacts::getRouteName());
+                    }),
+
+
                 PageNavigationItem::make(__('Notes'))
                     ->icon('heroicon-o-pencil-square')
                     ->url(function () use ($record) {
@@ -149,6 +160,7 @@ class ClientResource extends Resource
             'overview' => ClientOverview::route('/{record}/overview'),
             'notes' => ClientNotes::route('/{record}/notes'),
             'documents' => ClientDocuments::route('/{record}/documents'),
+            'contacts' => ClientContacts::route('/{record}/contacts'),
         ];
     }
 }

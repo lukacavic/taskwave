@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Organisationable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Client extends BaseModel
@@ -14,6 +15,11 @@ class Client extends BaseModel
     public function notes(): MorphMany
     {
         return $this->morphMany(Note::class, 'related');
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class, 'client_id');
     }
 
     public function documents(): MorphMany
