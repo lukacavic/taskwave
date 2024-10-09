@@ -22,6 +22,8 @@ class ProjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-command-line';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     public static function form(Form $form): Form
     {
         return $form
