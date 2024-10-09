@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "awcodes/filament-quick-create": "^3.4",
         "aymanalhattami/filament-page-with-sidebar": "^2.5",
         "dutchcodingcompany/filament-developer-logins": "^1.2",
         "filament/filament": "^3.2",

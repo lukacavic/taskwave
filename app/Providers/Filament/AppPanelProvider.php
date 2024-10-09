@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Awcodes\FilamentQuickCreate\QuickCreatePlugin;
 use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,6 +29,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->databaseNotifications()
             ->colors([
                 'primary' => '#014786',
@@ -55,6 +57,7 @@ class AppPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
+                QuickCreatePlugin::make(),
                 FilamentDeveloperLoginsPlugin::make()
                     ->enabled()
                     ->users([
