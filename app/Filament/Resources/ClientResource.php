@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\App\Resources\ClientResource\Pages\ClientDocuments;
 use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
 use App\Models\Client;
 use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
@@ -117,6 +119,15 @@ class ClientResource extends Resource
                     ->isActiveWhen(function () {
                         return request()->routeIs(ClientOverview::getRouteName());
                     }),
+
+                PageNavigationItem::make(__('Notes'))
+                    ->icon('heroicon-o-pencil-square')
+                    ->url(function () use ($record) {
+                        return static::getUrl('notes', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientNotes::getRouteName());
+                    }),
             ]);
     }
 
@@ -127,6 +138,7 @@ class ClientResource extends Resource
             //'create' => Pages\CreateClient::route('/create'),
             //'edit' => Pages\EditClient::route('/{record}/edit'),
             'overview' => ClientOverview::route('/{record}/overview'),
+            'notes' => ClientNotes::route('/{record}/notes'),
         ];
     }
 }

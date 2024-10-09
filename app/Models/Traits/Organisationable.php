@@ -14,6 +14,7 @@ trait Organisationable
 
            static::creating(function ($model) {
                $model->organisation_id = auth()->user()->organisation_id;
+               $model->user_id = auth()->id();
            });
        }
     }
