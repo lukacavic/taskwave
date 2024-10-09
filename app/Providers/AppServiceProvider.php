@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Filament\Actions\CreateAction;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->customizeFilamentActions();
+    }
+
+    private function customizeFilamentActions(): void
+    {
+        CreateAction::configureUsing(function(CreateAction $action) {
+            $action->icon('heroicon-o-plus');
+        });
     }
 }
