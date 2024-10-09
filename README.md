@@ -1,6 +1,6 @@
-# Takswave
+# Taskwave
 
-Self-hosted app for project management and customer relationship, built with Laravel & Filament.
+Self-hosted SAAS app for project management and customer relationship, built with Laravel & Filament.
 
 <hr>
 
@@ -14,7 +14,8 @@ Self-hosted app for project management and customer relationship, built with Lar
 
 ## About Taskwave
 
-Taskwave is a self-hosted app to manage projects, customers, tasks. It's an attempt to create PerfexCRM clone using Laravel/Filament. It is build upon Filament and TALL stack.
+Taskwave is a self-hosted SAAS app to manage projects, customers, tasks. It's an attempt to create PerfexCRM clone using
+Laravel/Filament. It is build upon Filament and TALL stack.
 
 <hr>
 <p align="center">
