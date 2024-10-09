@@ -7,6 +7,7 @@ use App\Filament\Clusters\SettingsCluster\Resources\TicketDepartmentResource\Pag
 use App\Filament\Clusters\SettingsCluster\Resources\TicketDepartmentResource\RelationManagers;
 use App\Models\TicketDepartment;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -35,8 +36,46 @@ class TicketDepartmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->label(__('Name')),
+
+                Forms\Components\TextInput::make('email')
+                    ->label(__('Email'))
+                    ->email()
+                    ->required(),
+
+                Forms\Components\Placeholder::make('IMAP configuration')
+                    ->label('IMAP configuration'),
+
+                Forms\Components\TextInput::make('imap_host')
+                    ->label(__('IMAP Host')),
+
+                Forms\Components\Split::make([
+                    Forms\Components\TextInput::make('imap_username')
+                        ->label(__('IMAP Username')),
+
+                    TextInput::make('imap_password')
+                        ->label(__('Password'))
+                        ->password(),
+                ]),
+
+                Forms\Components\ToggleButtons::make('imap_encryption')
+                    ->inline()
+                    ->options([
+                        'tls' => 'TLS',
+                        'ssl' => 'SSL',
+                        'none' => 'None',
+                    ]),
+
+                Forms\Components\Select::make('imap_folder')
+                    ->label(__('Folder'))
+                    ->required(),
+
+                Forms\Components\Checkbox::make('delete_after_import')
+                ->label(__('Delete After Import'))
             ]);
     }
 
@@ -44,7 +83,11 @@ class TicketDepartmentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name')),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->label(__('Email')),
             ])
             ->filters([
                 //
