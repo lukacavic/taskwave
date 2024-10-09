@@ -3,12 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\Pages\ClientOverview;
 use App\Models\Client;
+use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
+use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ClientResource extends Resource
 {
@@ -59,6 +63,9 @@ class ClientResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(
+                fn(Model $record): string => ClientOverview::getUrl([$record->id]),
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Name'))
@@ -95,12 +102,31 @@ class ClientResource extends Resource
         ];
     }
 
+    public static function sidebar(Model $record): FilamentPageSidebar
+    {
+        return FilamentPageSidebar::make()
+            ->setTitle($record->name)
+            ->sidebarNavigation()
+            ->setDescription(__('Client'))
+            ->setNavigationItems([
+                PageNavigationItem::make(__('Overview'))
+                    ->icon('heroicon-o-information-circle')
+                    ->url(function () use ($record) {
+                        return static::getUrl('overview', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientOverview::getRouteName());
+                    }),
+            ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListClients::route('/'),
             //'create' => Pages\CreateClient::route('/create'),
             //'edit' => Pages\EditClient::route('/{record}/edit'),
+            'overview' => ClientOverview::route('/{record}/overview'),
         ];
     }
 }
