@@ -18,9 +18,19 @@ class TicketDepartmentResource extends Resource
 {
     protected static ?string $model = TicketDepartment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $cluster = SettingsCluster::class;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Departments');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Support');
+    }
 
     public static function form(Form $form): Form
     {

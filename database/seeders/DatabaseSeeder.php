@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Organisation;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('org1'),
             'email' => 'admin@org1.com',
             'organisation_id' => 1
+        ]);
+
+        Organisation::factory()->create([
+            'name' => 'Company 1',
         ]);
     }
 }

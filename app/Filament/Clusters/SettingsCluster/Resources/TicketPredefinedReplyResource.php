@@ -22,11 +22,28 @@ class TicketPredefinedReplyResource extends Resource
 
     protected static ?string $cluster = SettingsCluster::class;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Predefined Replies');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Support');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->label(__('Name'))
+                    ->required(),
+
+                Forms\Components\RichEditor::make('content')
+                    ->label(__('Body'))
+                    ->required()
             ]);
     }
 
@@ -34,7 +51,16 @@ class TicketPredefinedReplyResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Name')),
+
+                Tables\Columns\TextColumn::make('content')
+                    ->searchable()
+                    ->sortable()
+                    ->html()
+                    ->label(__('Content'))
             ])
             ->filters([
                 //
