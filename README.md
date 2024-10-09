@@ -57,7 +57,7 @@ composer install
 
 ## Screenshots <small>[↑Top](#about-taskwave)</small>
 
-soon
+![](/images/SCR-20241009-qeva.png)
 
 ## Supporting <small>[↑Top](#about-taskwave)</small>
 
