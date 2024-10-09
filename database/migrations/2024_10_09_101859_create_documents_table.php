@@ -10,16 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone')->nullable();
-            $table->string('website')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('zip_code')->nullable();
-            $table->string('country')->nullable();
-            $table->unsignedInteger('user_id');
+            $table->integer('user_id');
+            $table->nullableMorphs('related');
             $table->integer('organisation_id');
             $table->softDeletes();
             $table->timestamps();
@@ -31,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('documents');
     }
 };

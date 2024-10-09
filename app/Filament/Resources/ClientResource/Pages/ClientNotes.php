@@ -60,17 +60,13 @@ class ClientNotes extends ManageRelatedRecords
             ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
-                    ->icon(function (Note $record) {
-                        /*if ($record->media()->exists()) {
-                            return 'heroicon-o-paper-clip';
-                        }*/
-
-                        return null;
-                    })
-                    ->description(function (Model $record) {
-                        return Str::limit(strip_tags($record->note), 40);
-                    })
+                    ->searchable()
                     ->label(__('Title')),
+
+                TextColumn::make('note')
+                    ->searchable()
+                    ->html()
+                    ->label(__('Note')),
 
                 TextColumn::make('created_at')
                     ->label(__('Created at'))

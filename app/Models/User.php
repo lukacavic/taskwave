@@ -49,7 +49,7 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    protected function fullName(): Attribute
+    public function fullName(): Attribute
     {
         return Attribute::make(function(){
             return $this->first_name . ' ' . $this->last_name;

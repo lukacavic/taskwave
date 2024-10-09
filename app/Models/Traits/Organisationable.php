@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\Organisation;
 use App\Models\Scopes\OrganisationScope;
+use App\Models\User;
 
 trait Organisationable
 {
@@ -22,5 +23,10 @@ trait Organisationable
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
