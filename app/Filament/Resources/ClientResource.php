@@ -122,6 +122,9 @@ class ClientResource extends Resource
                     }),
 
                 PageNavigationItem::make(__('Contacts'))
+                    ->badge(function () use ($record) {
+                        return $record->contacts->count();
+                    })
                     ->icon('heroicon-o-users')
                     ->url(function () use ($record) {
                         return static::getUrl('contacts', ['record' => $record->id]);
