@@ -8,9 +8,11 @@ use App\Models\Lead;
 use App\Models\Project;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -74,8 +76,17 @@ class LeadResource extends Resource
                     ->label(__('Email'))
                     ->maxLength(255),
 
-                Forms\Components\Select::make('status_id')
-                    ->label(__('Status')),
+                Forms\Components\Split::make([
+                    Forms\Components\Select::make('status_id')
+                        ->relationship('status', 'name')
+                        ->required()
+                        ->label(__('Status')),
+
+                    Forms\Components\Select::make('source_id')
+                        ->relationship('source', 'name')
+                        ->required()
+                        ->label(__('Source')),
+                ]),
 
                 Forms\Components\Select::make('assigned_user_id')
                     ->options(User::get()->pluck('fullName', 'id'))
@@ -83,6 +94,9 @@ class LeadResource extends Resource
 
                 Forms\Components\DatePicker::make('last_contact_at')
                     ->label(__('Last Contact')),
+
+                SpatieTagsInput::make('tags')
+                    ->label(__('Tags')),
 
                 Forms\Components\Textarea::make('description')
                     ->maxLength(65535)
@@ -97,12 +111,16 @@ class LeadResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Full Name'))
+                    ->sortable()
                     ->description(function (Lead $record) {
                         return $record->company;
                     })
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('email')
+                    ->sortable()
+                    ->copyable()
+                    ->copyMessage(__('Email copied'))
                     ->label(__('Email'))
                     ->searchable(),
 
@@ -110,16 +128,24 @@ class LeadResource extends Resource
                     ->searchable()
                     ->label(__('Phone')),
 
+                SpatieTagsColumn::make('tags')
+                    ->color('gray')
+                    ->label(__('Tags')),
+
                 Tables\Columns\TextColumn::make('assignedUser.fullName')
                     ->label(__('Assigned User'))
+                    ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('source.name')
+                    ->sortable()
                     ->label(__('Source'))
                     ->badge()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('status.name')
+                    ->sortable()
+                    ->badge()
                     ->label('Status'),
 
                 Tables\Columns\TextColumn::make('created_at')
@@ -148,6 +174,7 @@ class LeadResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
