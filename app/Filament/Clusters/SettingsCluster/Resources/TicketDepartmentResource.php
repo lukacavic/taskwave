@@ -43,6 +43,7 @@ class TicketDepartmentResource extends Resource
                     ->label(__('Name')),
 
                 Forms\Components\TextInput::make('email')
+                    ->prefixIcon('heroicon-o-at-symbol')
                     ->label(__('Email'))
                     ->email()
                     ->required(),
@@ -58,12 +59,14 @@ class TicketDepartmentResource extends Resource
                         ->label(__('IMAP Username')),
 
                     TextInput::make('imap_password')
+                        ->revealable()
                         ->label(__('Password'))
                         ->password(),
                 ]),
 
                 Forms\Components\ToggleButtons::make('imap_encryption')
                     ->inline()
+                    ->default('none')
                     ->options([
                         'tls' => 'TLS',
                         'ssl' => 'SSL',
@@ -71,8 +74,12 @@ class TicketDepartmentResource extends Resource
                     ]),
 
                 Forms\Components\Select::make('imap_folder')
-                    ->label(__('Folder'))
-                    ->required(),
+                    ->prefixIcon('heroicon-o-folder')
+                    ->hintAction(function () {
+                        return Forms\Components\Actions\Action::make('retrieve')
+                            ->label(__('Retrieve folders'));
+                    })
+                    ->label(__('Folder')),
 
                 Forms\Components\Checkbox::make('delete_after_import')
                 ->label(__('Delete After Import'))
