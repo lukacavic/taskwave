@@ -9,7 +9,7 @@ use Filament\Support\Contracts\HasLabel;
 enum ProjectStatus: int implements HasLabel
 {
     case NotStarted = 1;
-    case InProgress = 1;
+    case InProgress = 2;
 
     public function getLabel(): ?string
     {
