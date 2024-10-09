@@ -2,12 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
+use App\Filament\Resources\ClientResource\Pages\ClientNotes;
+use App\Filament\Resources\ClientResource\Pages\ClientOverview;
 use App\Filament\Resources\ProjectResource\Pages;
-use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Filament\Resources\ProjectResource\Pages\ProjectOverview;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
 use App\ProjectStatus;
+use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
+use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
@@ -15,6 +20,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ProjectResource extends Resource
 {
@@ -64,6 +70,9 @@ class ProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(
+                fn(Model $record): string => ProjectOverview::getUrl([$record->id]),
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Name'))
@@ -119,6 +128,42 @@ class ProjectResource extends Resource
             ]);
     }
 
+    public static function sidebar(Model $record): FilamentPageSidebar
+    {
+        return FilamentPageSidebar::make()
+            ->setTitle($record->name)
+            ->sidebarNavigation()
+            ->setDescription(__('Client'))
+            ->setNavigationItems([
+                PageNavigationItem::make(__('Overview'))
+                    ->icon('heroicon-o-information-circle')
+                    ->url(function () use ($record) {
+                        return static::getUrl('overview', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ProjectOverview::getRouteName());
+                    }),
+
+                /*PageNavigationItem::make(__('Notes'))
+                    ->icon('heroicon-o-pencil-square')
+                    ->url(function () use ($record) {
+                        return static::getUrl('notes', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientNotes::getRouteName());
+                    }),
+
+                PageNavigationItem::make(__('Documents'))
+                    ->icon('heroicon-o-paper-clip')
+                    ->url(function () use ($record) {
+                        return static::getUrl('documents', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientDocuments::getRouteName());
+                    }),*/
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -132,6 +177,7 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             //'create' => Pages\CreateProject::route('/create'),
             //'edit' => Pages\EditProject::route('/{record}/edit'),
+            'overview' => Pages\ProjectOverview::route('/{record}/overview'),
         ];
     }
 }
