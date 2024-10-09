@@ -3,9 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
-use App\Filament\Resources\ClientResource\Pages\ClientNotes;
-use App\Filament\Resources\ClientResource\Pages\ClientOverview;
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\Pages\ProjectDocuments;
+use App\Filament\Resources\ProjectResource\Pages\ProjectNotes;
 use App\Filament\Resources\ProjectResource\Pages\ProjectOverview;
 use App\Models\Client;
 use App\Models\Project;
@@ -144,13 +144,13 @@ class ProjectResource extends Resource
                         return request()->routeIs(ProjectOverview::getRouteName());
                     }),
 
-                /*PageNavigationItem::make(__('Notes'))
+                PageNavigationItem::make(__('Notes'))
                     ->icon('heroicon-o-pencil-square')
                     ->url(function () use ($record) {
                         return static::getUrl('notes', ['record' => $record->id]);
                     })
                     ->isActiveWhen(function () {
-                        return request()->routeIs(ClientNotes::getRouteName());
+                        return request()->routeIs(ProjectNotes::getRouteName());
                     }),
 
                 PageNavigationItem::make(__('Documents'))
@@ -159,8 +159,8 @@ class ProjectResource extends Resource
                         return static::getUrl('documents', ['record' => $record->id]);
                     })
                     ->isActiveWhen(function () {
-                        return request()->routeIs(ClientDocuments::getRouteName());
-                    }),*/
+                        return request()->routeIs(ProjectDocuments::getRouteName());
+                    }),
             ]);
     }
 
@@ -178,6 +178,8 @@ class ProjectResource extends Resource
             //'create' => Pages\CreateProject::route('/create'),
             //'edit' => Pages\EditProject::route('/{record}/edit'),
             'overview' => Pages\ProjectOverview::route('/{record}/overview'),
+            'notes' => Pages\ProjectNotes::route('/{record}/notes'),
+            'documents' => Pages\ProjectDocuments::route('/{record}/documents'),
         ];
     }
 }
