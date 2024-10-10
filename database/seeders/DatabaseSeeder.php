@@ -8,6 +8,7 @@ use App\Models\Contract;
 use App\Models\Lead;
 use App\Models\Organisation;
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,5 +45,6 @@ class DatabaseSeeder extends Seeder
         Lead::factory()->count(10)->create();
         Project::factory()->count(10)->create();
         Contract::factory()->count(10)->create();
+        Task::factory()->count(10)->create();
     }
 }
