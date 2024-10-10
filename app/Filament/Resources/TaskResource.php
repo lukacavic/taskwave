@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Project\Resources\ProjectMilestoneResource;
 use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers;
+use App\Filament\Resources\TaskResource\Widgets\TasksStats;
 use App\Models\Client;
 use App\Models\Lead;
 use App\Models\Task;
@@ -100,15 +101,15 @@ class TaskResource extends Resource
                     ->multiple(),
 
                 ToggleButtons::make('priority_id')
-                    ->label('Prioritet')
+                    ->label(__('Priority'))
                     ->grouped()
+                    ->default(2)
+                    ->options([
+                        1 => __('Low'),
+                        2 => __('Medium'),
+                        3 => __('High'),
+                    ])
                     ->inline(),
-
-                Placeholder::make('divider')
-                    ->columnSpanFull()
-                    ->hiddenLabel()
-                    ->visible(false)
-                    ->content(new HtmlString('<hr>')),
 
                 RichEditor::make('description')
                     ->label(__('Description'))
@@ -200,6 +201,13 @@ class TaskResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            TasksStats::class
         ];
     }
 

@@ -10,10 +10,21 @@ class ListTasks extends ListRecords
 {
     protected static string $resource = TaskResource::class;
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TaskResource\Widgets\TasksStats::class
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),
+
+            Actions\Action::make('overview')
+                ->label(__('Tasks Overview'))
+                ->color('success')
         ];
     }
 }
