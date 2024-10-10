@@ -7,6 +7,7 @@ use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\Pages\ProjectDocuments;
 use App\Filament\Resources\ProjectResource\Pages\ProjectNotes;
 use App\Filament\Resources\ProjectResource\Pages\ProjectOverview;
+use App\Filament\Resources\ProjectResource\Widgets\ProjectStats;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
@@ -67,6 +68,11 @@ class ProjectResource extends Resource
             ]);
     }
 
+    public static function getWidgets(): array
+    {
+        return [ProjectStats::class];
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -91,8 +97,13 @@ class ProjectResource extends Resource
                     ->color('gray')
                     ->label(__('Tags')),
 
+                Tables\Columns\TextColumn::make('start_at')
+                    ->label(__('Start Date'))
+                    ->date()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('deadline_at')
-                    ->label(__('Deadline At'))
+                    ->label(__('Deadline'))
                     ->date()
                     ->sortable(),
 

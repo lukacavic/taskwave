@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\ClientResource\Widgets;
 
-use App\Models\Offer;
-use App\OfferStatus;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

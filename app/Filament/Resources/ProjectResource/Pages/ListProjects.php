@@ -10,6 +10,11 @@ class ListProjects extends ListRecords
 {
     protected static string $resource = ProjectResource::class;
 
+    protected function getHeaderWidgets(): array
+    {
+        return [ProjectResource\Widgets\ProjectStats::class];
+    }
+
     protected function getHeaderActions(): array
     {
         return [

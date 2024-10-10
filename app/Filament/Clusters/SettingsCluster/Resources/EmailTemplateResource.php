@@ -78,7 +78,7 @@ class EmailTemplateResource extends Resource
                     ->icon(function (EmailTemplate $record) {
                         return $record->media()->exists() ? 'heroicon-o-paper-clip' : null;
                     })
-                    ->label('Naziv'),
+                    ->label(__('Name')),
 
                 Tables\Columns\TextColumn::make('type_id')
                     ->searchable()
@@ -87,7 +87,7 @@ class EmailTemplateResource extends Resource
                     ->formatStateUsing(function (EmailTemplate $record) {
                         return EmailTemplateType::from($record->type_id)->getLabel();
                     })
-                    ->label('Vrsta'),
+                    ->label(__('Type')),
 
                 Tables\Columns\TextColumn::make('user.full_name')
                     ->searchable()

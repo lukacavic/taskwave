@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Client;
 use App\Models\Lead;
 use App\Models\Organisation;
+use App\Models\Project;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
 
         Client::factory()->count(10)->create();
         Lead::factory()->count(10)->create();
+        Project::factory()->count(10)->create();
     }
 }
