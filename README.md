@@ -96,7 +96,7 @@ https://slippy-surf-wtnb61jj78.ploi.site/app/login
 
 ### Be a sponsor
 
-Taskwave is an MIT-licensed open source project with its ongoing development made possible thanks to the support by our amazing backers.
+Taskwave is an MIT-licensed open source project with its ongoing development.
 
 Support the development of "taskwave" by being a sponsor, reach at <luka.cavic@gmail.com>
 
@@ -113,7 +113,6 @@ If you discover a security vulnerability within taskwave, please send an e-mail 
 
 - Author: [Luka Čavić](https://github.com/lukacavic)
 
-- [Full Contributors List](https://github.com/lukacavic/taskwave/graphs/contributors)
 
 
 ## License <small>[↑Top](#about-taskwave)</small>
