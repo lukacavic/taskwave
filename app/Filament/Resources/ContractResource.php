@@ -25,7 +25,42 @@ class ContractResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('client_id')
+                    ->label(__('Client'))
+                    ->required()
+                    ->prefixIcon('heroicon-o-user')
+                    ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('subject')
+                    ->label(__('Subject'))
+                    ->columnSpanFull()
+                    ->required(),
+
+                Forms\Components\TextInput::make('contract_value')
+                    ->label(__('Contract Value'))
+                    ->numeric()
+                    ->suffixIcon('heroicon-o-currency-euro')
+                    ->columnSpanFull(),
+
+                Forms\Components\Select::make('type_id')
+                    ->label(__('Type'))
+                    ->prefixIcon('heroicon-o-folder')
+                    ->required()
+                    ->columnSpanFull(),
+
+                Forms\Components\Split::make([
+                    Forms\Components\DatePicker::make('start_date')
+                        ->required()
+                        ->label(__('Start Date'))
+                        ->default(now()),
+
+                    Forms\Components\DatePicker::make('end_date')
+                        ->label(__('End Date')),
+                ])->columnSpanFull(),
+
+                Forms\Components\RichEditor::make('description')
+                    ->label(__('Description'))
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -66,8 +101,8 @@ class ContractResource extends Resource
     {
         return [
             'index' => Pages\ListContracts::route('/'),
-            'create' => Pages\CreateContract::route('/create'),
-            'edit' => Pages\EditContract::route('/{record}/edit'),
+            //'create' => Pages\CreateContract::route('/create'),
+            //'edit' => Pages\EditContract::route('/{record}/edit'),
         ];
     }
 }
