@@ -2,9 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\App\Resources\ClientResource;
+use App\Filament\Clusters\SettingsCluster\Resources\LeadSourceResource;
+use App\Filament\Clusters\SettingsCluster\Resources\LeadStatusResource;
 use App\Filament\Resources\LeadResource\Pages;
 use App\Filament\Resources\LeadResource\RelationManagers;
+use App\Models\Client;
 use App\Models\Lead;
+use App\Models\LeadSource;
+use App\Models\LeadStatus;
 use App\Models\Project;
 use App\Models\User;
 use Filament\Forms;
@@ -33,7 +39,6 @@ class LeadResource extends Resource
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('company')
-                    ->required()
                     ->label(__('Company'))
                     ->maxLength(255),
 
@@ -62,33 +67,42 @@ class LeadResource extends Resource
                     ->label(__('Website'))
                     ->prefix('http://'),
 
-                Forms\Components\TextInput::make('mobile')
-                    ->maxLength(255)
-                    ->label(__('Mobile')),
-
                 Forms\Components\TextInput::make('phone')
                     ->tel()
+                    ->prefixIcon('heroicon-o-phone')
                     ->label(__('Phone'))
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->prefixIcon('heroicon-o-at-symbol')
                     ->label(__('Email'))
                     ->maxLength(255),
 
-                Forms\Components\Split::make([
-                    Forms\Components\Select::make('status_id')
-                        ->relationship('status', 'name')
-                        ->required()
-                        ->label(__('Status')),
+                Forms\Components\Select::make('status_id')
+                    ->relationship('status', 'name')
+                    ->required()
+                    ->createOptionForm(function ($form) {
+                        return LeadStatusResource::form($form);
+                    })
+                    ->createOptionUsing(function (array $data) {
+                        return LeadStatus::query()->create($data)->id;
+                    })
+                    ->label(__('Status')),
 
-                    Forms\Components\Select::make('source_id')
-                        ->relationship('source', 'name')
-                        ->required()
-                        ->label(__('Source')),
-                ]),
+                Forms\Components\Select::make('source_id')
+                    ->relationship('source', 'name')
+                    ->required()
+                    ->createOptionForm(function ($form) {
+                        return LeadSourceResource::form($form);
+                    })
+                    ->createOptionUsing(function (array $data) {
+                        return LeadSource::query()->create($data)->id;
+                    })
+                    ->label(__('Source')),
 
                 Forms\Components\Select::make('assigned_user_id')
+                    ->prefixIcon('heroicon-o-user')
                     ->options(User::get()->pluck('fullName', 'id'))
                     ->label(__('Assigned User')),
 
@@ -96,6 +110,7 @@ class LeadResource extends Resource
                     ->label(__('Last Contact')),
 
                 SpatieTagsInput::make('tags')
+                    ->columnSpanFull()
                     ->label(__('Tags')),
 
                 Forms\Components\Textarea::make('description')

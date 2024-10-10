@@ -6,6 +6,7 @@ use App\Filament\Imports\LeadImportImporter;
 use App\Filament\Resources\LeadResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\Alignment;
 
 class ListLeads extends ListRecords
 {
@@ -14,7 +15,10 @@ class ListLeads extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->modalAlignment(Alignment::Left)
+                ->modalIcon('heroicon-o-user-plus')
+                ->modalDescription('Add new lead'),
 
             Actions\ImportAction::make()
                 ->icon('heroicon-o-arrow-up-tray')
