@@ -14,9 +14,11 @@ use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ClientResource extends Resource
 {
@@ -73,17 +75,30 @@ class ClientResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Name'))
+                    ->description(function (Client $record) {
+                        return Str::limit($record->full_address, 30);
+                    })
                     ->searchable()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('full_address')
-                    ->label(__('Address')),
 
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('Email')),
 
                 Tables\Columns\TextColumn::make('phone')
+                    ->color('primary')
+                    ->copyable()
                     ->label(__('Phone')),
+
+                Tables\Columns\ToggleColumn::make('active')
+                    ->label(__('Active')),
+
+                Tables\Columns\TextColumn::make('groups.name')
+                    ->label(__('Groups'))
+                    ->badge(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at'))
+                    ->dateTime()
             ])
             ->filters([
                 //
