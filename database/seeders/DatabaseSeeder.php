@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Client;
 use App\Models\Contract;
+use App\Models\Event;
 use App\Models\Lead;
 use App\Models\Organisation;
 use App\Models\Project;
@@ -46,5 +47,6 @@ class DatabaseSeeder extends Seeder
         Project::factory()->count(10)->create();
         Contract::factory()->count(10)->create();
         Task::factory()->count(10)->create();
+        Event::factory()->count(10)->create();
     }
 }
