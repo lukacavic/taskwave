@@ -6,6 +6,7 @@ use App\Filament\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers;
 use App\Filament\Resources\ContractResource\Widgets\ContractsByType;
 use App\Filament\Resources\ContractResource\Widgets\ContractStats;
+use App\Models\Client;
 use App\Models\Contract;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -28,6 +29,7 @@ class ContractResource extends Resource
                 Forms\Components\Select::make('client_id')
                     ->label(__('Client'))
                     ->required()
+                    ->options(Client::get()->pluck('name', 'id'))
                     ->prefixIcon('heroicon-o-user')
                     ->columnSpanFull(),
 
