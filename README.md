@@ -74,6 +74,10 @@ Email: admin@org1.com
 Password: org1
 ```
 
+***Check Demo: (Reset every hour)***
+
+https://slippy-surf-wtnb61jj78.ploi.site/app/login
+
 ## Screenshots <small>[↑Top](#about-taskwave)</small>
 
 ![](/images/SCR-20241009-qeva.png)
