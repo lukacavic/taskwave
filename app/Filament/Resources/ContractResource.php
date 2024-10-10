@@ -8,6 +8,7 @@ use App\Filament\Resources\ContractResource\Widgets\ContractsByType;
 use App\Filament\Resources\ContractResource\Widgets\ContractStats;
 use App\Models\Client;
 use App\Models\Contract;
+use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -77,13 +78,42 @@ class ContractResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('subject')
+                    ->searchable()
+                    ->label(__('Subject')),
+
+                Tables\Columns\TextColumn::make('client.name')
+                    ->sortable()
+                    ->searchable()
+                    ->label(__('Client')),
+
+                Tables\Columns\TextColumn::make('type.name')
+                    ->badge()
+                    ->sortable()
+                    ->label(__('Type')),
+
+                Tables\Columns\TextColumn::make('contract_value')
+                    ->label(__('Contract Value'))
+                    ->sortable()
+                    ->money('EUR'),
+
+                Tables\Columns\TextColumn::make('start_date')
+                    ->date()
+                    ->sortable()
+                    ->label(__('Start Date')),
+
+                Tables\Columns\TextColumn::make('end_date')
+                    ->date()
+                    ->sortable()
+                    ->label(__('End Date')),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

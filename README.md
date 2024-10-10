@@ -67,7 +67,7 @@ composer install
 
 ![](/images/SCR-20241010-hjjt.png)
 
-![](/images/SCR-20241010-isyz.png)
+![](/images/SCR-20241010-jcjv.png)
 
 ## Supporting <small>[↑Top](#about-taskwave)</small>
 

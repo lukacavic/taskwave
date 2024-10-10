@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
+use App\Models\Contract;
 use App\Models\Lead;
 use App\Models\Organisation;
 use App\Models\Project;
@@ -33,5 +34,6 @@ class DatabaseSeeder extends Seeder
         Client::factory()->count(10)->create();
         Lead::factory()->count(10)->create();
         Project::factory()->count(10)->create();
+        Contract::factory()->count(10)->create();
     }
 }
