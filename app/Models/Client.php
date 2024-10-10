@@ -35,6 +35,11 @@ class Client extends BaseModel
         return $this->hasMany(Contact::class, 'client_id');
     }
 
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class, 'client_id');
+    }
+
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'related');

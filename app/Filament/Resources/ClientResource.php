@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\Pages\ClientContacts;
+use App\Filament\Resources\ClientResource\Pages\ClientContracts;
 use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
 use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
@@ -184,6 +185,15 @@ class ClientResource extends Resource
                     ->isActiveWhen(function () {
                         return request()->routeIs(ClientTasks::getRouteName());
                     }),
+
+                PageNavigationItem::make(__('Contracts'))
+                    ->icon('heroicon-o-document-chart-bar')
+                    ->url(function () use ($record) {
+                        return static::getUrl('contracts', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientContracts::getRouteName());
+                    }),
             ]);
     }
 
@@ -198,6 +208,7 @@ class ClientResource extends Resource
             'documents' => ClientDocuments::route('/{record}/documents'),
             'contacts' => ClientContacts::route('/{record}/contacts'),
             'tasks' => ClientTasks::route('/{record}/tasks'),
+            'contracts' => ClientContracts::route('/{record}/contracts'),
         ];
     }
 }
