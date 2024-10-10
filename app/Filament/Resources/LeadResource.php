@@ -5,7 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\App\Resources\ClientResource;
 use App\Filament\Clusters\SettingsCluster\Resources\LeadSourceResource;
 use App\Filament\Clusters\SettingsCluster\Resources\LeadStatusResource;
+use App\Filament\Resources\ClientResource\Pages\ClientContacts;
+use App\Filament\Resources\ClientResource\Pages\ClientContracts;
+use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
+use App\Filament\Resources\ClientResource\Pages\ClientNotes;
+use App\Filament\Resources\ClientResource\Pages\ClientOverview;
+use App\Filament\Resources\ClientResource\Pages\ClientTasks;
 use App\Filament\Resources\LeadResource\Pages;
+use App\Filament\Resources\LeadResource\Pages\LeadOverview;
 use App\Filament\Resources\LeadResource\RelationManagers;
 use App\Models\Client;
 use App\Models\Lead;
@@ -13,6 +20,8 @@ use App\Models\LeadSource;
 use App\Models\LeadStatus;
 use App\Models\Project;
 use App\Models\User;
+use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
+use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
@@ -21,6 +30,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LeadResource extends Resource
@@ -123,6 +133,9 @@ class LeadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(
+                fn(Model $record): string => LeadOverview::getUrl([$record->id]),
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Full Name'))
@@ -205,12 +218,80 @@ class LeadResource extends Resource
         ];
     }
 
+    public static function sidebar(Model $record): FilamentPageSidebar
+    {
+        return FilamentPageSidebar::make()
+            ->setTitle($record->name)
+            ->sidebarNavigation()
+            ->setDescription(__('Lead'))
+            ->setNavigationItems([
+                PageNavigationItem::make(__('Overview'))
+                    ->icon('heroicon-o-information-circle')
+                    ->url(function () use ($record) {
+                        return static::getUrl('overview', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(LeadOverview::getRouteName());
+                    }),
+
+                /*PageNavigationItem::make(__('Contacts'))
+                    ->badge(function () use ($record) {
+                        return $record->contacts->count();
+                    })
+                    ->icon('heroicon-o-users')
+                    ->url(function () use ($record) {
+                        return static::getUrl('contacts', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientContacts::getRouteName());
+                    }),
+
+
+                PageNavigationItem::make(__('Notes'))
+                    ->icon('heroicon-o-pencil-square')
+                    ->url(function () use ($record) {
+                        return static::getUrl('notes', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientNotes::getRouteName());
+                    }),
+
+                PageNavigationItem::make(__('Documents'))
+                    ->icon('heroicon-o-paper-clip')
+                    ->url(function () use ($record) {
+                        return static::getUrl('documents', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientDocuments::getRouteName());
+                    }),
+
+                PageNavigationItem::make(__('Tasks'))
+                    ->icon('heroicon-o-rectangle-stack')
+                    ->url(function () use ($record) {
+                        return static::getUrl('tasks', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientTasks::getRouteName());
+                    }),
+
+                PageNavigationItem::make(__('Contracts'))
+                    ->icon('heroicon-o-document-chart-bar')
+                    ->url(function () use ($record) {
+                        return static::getUrl('contracts', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientContracts::getRouteName());
+                    }),*/
+            ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListLeads::route('/'),
             //'create' => Pages\CreateLead::route('/create'),
             //'edit' => Pages\EditLead::route('/{record}/edit'),
+            'overview' => LeadOverview::route('/{record}/overview'),
         ];
     }
 }
