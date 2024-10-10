@@ -61,6 +61,8 @@ composer install
 
 ![](/images/SCR-20241010-hdwh.png)
 
+![](/images/SCR-20241010-hgrz.png)
+
 ## Supporting <small>[↑Top](#about-taskwave)</small>
 
 ### Be a sponsor

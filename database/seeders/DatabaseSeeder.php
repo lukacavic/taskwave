@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
+use App\Models\Lead;
 use App\Models\Organisation;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,5 +30,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Client::factory()->count(10)->create();
+        Lead::factory()->count(10)->create();
     }
 }
