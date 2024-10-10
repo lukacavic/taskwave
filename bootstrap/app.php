@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->trustHosts(at: ['slippy-surf-wtnb61jj78.ploi.site']);
     })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->call('migrate:fresh --seed --force')->daily();
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
