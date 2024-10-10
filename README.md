@@ -55,6 +55,25 @@ Install composer packages
 composer install
 ```
 
+Generate key
+
+```sh
+php artisan key:generate
+```
+
+Migrate and seed
+
+```sh
+php artisan migrate --seed
+```
+
+Login
+
+```sh
+Email: admin@org1.com
+Password: org1
+```
+
 ## Screenshots <small>[↑Top](#about-taskwave)</small>
 
 ![](/images/SCR-20241009-qeva.png)
