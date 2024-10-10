@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->trustProxies(at: '*');
+        $middleware->trustHosts(at: ['slippy-surf-wtnb61jj78.ploi.site']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

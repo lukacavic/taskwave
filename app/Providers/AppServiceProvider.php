@@ -5,6 +5,7 @@ namespace App\Providers;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\CreateAction as TableCreateAction;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        URL::forceScheme('https');
+
         $this->customizeFilamentActions();
     }
 

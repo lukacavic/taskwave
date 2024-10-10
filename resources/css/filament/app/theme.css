@@ -6,3 +6,6 @@
     @apply !max-w-full flex-grow;
 }
 
+.fi-btn {
+    @apply rounded-md;
+}
