@@ -7,6 +7,7 @@ use App\Filament\Resources\ClientResource\Pages\ClientContacts;
 use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
 use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
+use App\Filament\Resources\ClientResource\Widgets\ClientStats;
 use App\Models\Client;
 use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
 use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
@@ -102,6 +103,13 @@ class ClientResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            ClientStats::class
         ];
     }
 
