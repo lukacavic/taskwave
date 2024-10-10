@@ -7,6 +7,7 @@ use App\Filament\Resources\ClientResource\Pages\ClientContacts;
 use App\Filament\Resources\ClientResource\Pages\ClientDocuments;
 use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
+use App\Filament\Resources\ClientResource\Pages\ClientTasks;
 use App\Filament\Resources\ClientResource\Widgets\ClientStats;
 use App\Models\Client;
 use AymanAlhattami\FilamentPageWithSidebar\FilamentPageSidebar;
@@ -174,6 +175,15 @@ class ClientResource extends Resource
                     ->isActiveWhen(function () {
                         return request()->routeIs(ClientDocuments::getRouteName());
                     }),
+
+                PageNavigationItem::make(__('Tasks'))
+                    ->icon('heroicon-o-rectangle-stack')
+                    ->url(function () use ($record) {
+                        return static::getUrl('tasks', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(ClientTasks::getRouteName());
+                    }),
             ]);
     }
 
@@ -187,6 +197,7 @@ class ClientResource extends Resource
             'notes' => ClientNotes::route('/{record}/notes'),
             'documents' => ClientDocuments::route('/{record}/documents'),
             'contacts' => ClientContacts::route('/{record}/contacts'),
+            'tasks' => ClientTasks::route('/{record}/tasks'),
         ];
     }
 }
