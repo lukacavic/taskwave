@@ -144,7 +144,7 @@ class ProjectResource extends Resource
         return FilamentPageSidebar::make()
             ->setTitle($record->name)
             ->sidebarNavigation()
-            ->setDescription(__('Client'))
+            ->setDescription(__('Project'))
             ->setNavigationItems([
                 PageNavigationItem::make(__('Overview'))
                     ->icon('heroicon-o-information-circle')

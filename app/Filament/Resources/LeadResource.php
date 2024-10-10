@@ -12,6 +12,7 @@ use App\Filament\Resources\ClientResource\Pages\ClientNotes;
 use App\Filament\Resources\ClientResource\Pages\ClientOverview;
 use App\Filament\Resources\ClientResource\Pages\ClientTasks;
 use App\Filament\Resources\LeadResource\Pages;
+use App\Filament\Resources\LeadResource\Pages\LeadNotes;
 use App\Filament\Resources\LeadResource\Pages\LeadOverview;
 use App\Filament\Resources\LeadResource\RelationManagers;
 use App\Models\Client;
@@ -234,6 +235,15 @@ class LeadResource extends Resource
                         return request()->routeIs(LeadOverview::getRouteName());
                     }),
 
+                PageNavigationItem::make(__('Notes'))
+                    ->icon('heroicon-o-pencil-square')
+                    ->url(function () use ($record) {
+                        return static::getUrl('notes', ['record' => $record->id]);
+                    })
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(LeadNotes::getRouteName());
+                    }),
+
                 /*PageNavigationItem::make(__('Contacts'))
                     ->badge(function () use ($record) {
                         return $record->contacts->count();
@@ -247,14 +257,7 @@ class LeadResource extends Resource
                     }),
 
 
-                PageNavigationItem::make(__('Notes'))
-                    ->icon('heroicon-o-pencil-square')
-                    ->url(function () use ($record) {
-                        return static::getUrl('notes', ['record' => $record->id]);
-                    })
-                    ->isActiveWhen(function () {
-                        return request()->routeIs(ClientNotes::getRouteName());
-                    }),
+
 
                 PageNavigationItem::make(__('Documents'))
                     ->icon('heroicon-o-paper-clip')
@@ -292,6 +295,7 @@ class LeadResource extends Resource
             //'create' => Pages\CreateLead::route('/create'),
             //'edit' => Pages\EditLead::route('/{record}/edit'),
             'overview' => LeadOverview::route('/{record}/overview'),
+            'notes' => LeadNotes::route('/{record}/notes'),
         ];
     }
 }
