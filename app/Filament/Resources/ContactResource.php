@@ -7,6 +7,7 @@ use App\Filament\Resources\ContactResource\RelationManagers;
 use App\Models\Contact;
 use Filament\Actions\DeleteAction;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,8 +26,43 @@ class ContactResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
-                //
+                Forms\Components\FileUpload::make('profile_photo')
+                    ->avatar()
+                    ->alignCenter()
+                    ->label(__('Profile image'))
+                    ->circleCropper(),
+
+                Forms\Components\TextInput::make('first_name')
+                    ->label(__('First name'))
+                    ->required(),
+
+                Forms\Components\TextInput::make('last_name')
+                    ->label(__('Last name'))
+                    ->required(),
+
+                Forms\Components\TextInput::make('position')
+                    ->label(__('Position')),
+
+                TextInput::make('email')
+                    ->prefixIcon('heroicon-o-at-symbol')
+                    ->label(__('Email'))
+                    ->email(),
+
+                Forms\Components\TextInput::make('phone')
+                    ->label(__('Phone'))
+                    ->prefixIcon('heroicon-o-phone')
+                    ->tel(),
+
+                TextInput::make('password')
+                    ->password()
+                    ->disabledOn('edit')
+                    ->label(__('Password'))
+                    ->revealable(),
+
+                Forms\Components\Checkbox::make('primary_contact')
+                    ->label(__('Primary contact'))
             ]);
     }
 

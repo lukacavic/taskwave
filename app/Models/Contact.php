@@ -14,6 +14,8 @@ class Contact extends Authenticatable
 {
     use HasFactory, SoftDeletes, Organisationable;
 
+    protected $guarded = ['id'];
+
     protected $hidden = [
         'password',
         'remember_token',

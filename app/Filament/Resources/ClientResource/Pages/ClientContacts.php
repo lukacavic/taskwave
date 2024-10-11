@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\ClientResource\Pages;
 
 use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\ContactResource;
 use AymanAlhattami\FilamentPageWithSidebar\Traits\HasPageSidebar;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\ManageRelatedRecords;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
@@ -35,10 +37,7 @@ class ClientContacts extends ManageRelatedRecords
 
     public function form(Form $form): Form
     {
-        return $form
-            ->schema([
-
-            ])->columns(1);
+        return ContactResource::form($form);
     }
 
     public function table(Table $table): Table
@@ -66,7 +65,10 @@ class ClientContacts extends ManageRelatedRecords
                     ->dateTime()
             ])
             ->headerActions([
-                CreateAction::make(),
+                CreateAction::make()
+                    ->modalAlignment(Alignment::Left)
+                    ->modalIcon('heroicon-o-user-plus')
+                    ->modalDescription('Add new contact'),
             ])
             ->actions([
                 EditAction::make(),
