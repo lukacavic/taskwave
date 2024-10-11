@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description');
             $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('end_date')->nullable();
             $table->unsignedInteger('user_id');
             $table->string('color')->nullable();
             $table->boolean('public')->default(false);
