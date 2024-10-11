@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Traits\Organisationable;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasName;
+use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,8 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 
-class Contact extends Authenticatable implements FilamentUser, HasName
+class Contact extends Authenticatable implements FilamentUser, HasName, HasTenants, HasDefaultTenant
 {
     use HasFactory, SoftDeletes, Organisationable, Notifiable;
 
@@ -52,5 +55,20 @@ class Contact extends Authenticatable implements FilamentUser, HasName
     public function getFilamentName(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return true;
+    }
+
+    public function getTenants(Panel $panel): array|Collection
+    {
+        return collect($this->organisation);
+    }
+
+    public function getDefaultTenant(Panel $panel): ?Model
+    {
+        return $this->organisation;
     }
 }
