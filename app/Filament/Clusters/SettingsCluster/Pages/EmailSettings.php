@@ -3,9 +3,11 @@
 namespace App\Filament\Clusters\SettingsCluster\Pages;
 
 use App\Filament\Clusters\SettingsCluster;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -14,7 +16,10 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Exceptions\Halt;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 
 class EmailSettings extends Page implements HasForms
 {
@@ -54,6 +59,11 @@ class EmailSettings extends Page implements HasForms
         return $form
             ->schema([
                 Section::make()
+                    ->key('email-settings')
+                    ->footerActions([
+                        self::getSendTestEmailAction()
+                    ])
+                    ->footerActionsAlignment(Alignment::End)
                     ->columns(2)
                     ->schema([
                         ToggleButtons::make('email_enabled')
@@ -152,6 +162,66 @@ class EmailSettings extends Page implements HasForms
 
             ])
             ->statePath('data');
+    }
+
+    public function getSendTestEmailAction(): \Filament\Forms\Components\Actions\Action
+    {
+        return \Filament\Forms\Components\Actions\Action::make('test-email-settings')
+            ->label('Send Test Email')
+            ->outlined()
+            ->icon('heroicon-o-at-symbol')
+            ->disabled(function (Get $get) {
+                return $get('smtp_server') == null || $get('smtp_port') == null;
+            })
+            ->action(function ($data, Get $get) {
+                try {
+                    config()->set('mail.default', 'smtp');
+                    config()->set('mail.mailers.smtp.host', $get('smtp_server'));
+                    config()->set('mail.mailers.smtp.port', $get('smtp_port'));
+                    config()->set('mail.mailers.smtp.username', $get('smtp_username'));
+                    config()->set('mail.mailers.smtp.password', $get('smtp_password'));
+                    config()->set('mail.mailers.smtp.encryption', $get('smtp_encryption'));
+
+                    config()->set('mail.from.name', $get('smtp_from_name'));
+                    config()->set('mail.from.address', $get('smtp_from'));
+
+                    Mail::raw($data['body'], function (Message $msg) use ($data) {
+                        $msg->to($data['to'])
+                            ->subject($data['subject']);
+                    })->getDebug();
+
+                } catch (Exception $e) {
+                    Notification::make()
+                        ->danger()
+                        ->title(__('Error sending email'))
+                        ->body($e->getMessage())
+                        ->send();
+
+                    $this->halt();
+                }
+
+                Notification::make()
+                    ->success()
+                    ->title(__('Email sent'))
+                    ->send();
+
+            })
+            ->form(function ($form) {
+                return $form->schema([
+                    TextInput::make('to')
+                        ->label(__('To'))
+                        ->required()
+                        ->email(),
+
+                    TextInput::make('subject')
+                        ->label(__('Subject'))
+                        ->required(),
+
+                    Textarea::make('body')
+                        ->label(__('Body'))
+                        ->required(),
+                ]);
+            });
     }
 
     public function save(): void
