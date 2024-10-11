@@ -73,28 +73,35 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('full_name')
                     ->sortable()
                     ->searchable()
+                    ->description(function (Contact $record) {
+                        return $record->position;
+                    })
                     ->label(__('Full Name')),
-
-                Tables\Columns\TextColumn::make('email')
-                    ->sortable()
-                    ->searchable()
-                    ->label(__('Email')),
 
                 Tables\Columns\TextColumn::make('client.name')
                     ->sortable()
                     ->searchable()
                     ->label(__('Client')),
 
+                Tables\Columns\ToggleColumn::make('active')
+                    ->label(__('Active')),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->sortable()
+                    ->searchable()
+                    ->label(__('Email')),
+
                 Tables\Columns\TextColumn::make('phone')
                     ->sortable()
                     ->searchable()
                     ->label(__('Phone')),
 
-                Tables\Columns\TextColumn::make('position')
-                    ->label(__('Position')),
 
                 Tables\Columns\TextColumn::make('last_login_at')
                     ->dateTime()
+                    ->description(function (Contact $record) {
+                        return $record->last_login_at->diffForHumans() ?? null;
+                    })
                     ->label(__('Last Login')),
             ])
             ->filters([

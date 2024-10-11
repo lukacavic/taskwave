@@ -21,6 +21,13 @@ class Contact extends Authenticatable
         'remember_token',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'last_login_at' => 'datetime',
+        ];
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(function () {
