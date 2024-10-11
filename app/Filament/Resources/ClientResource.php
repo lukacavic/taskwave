@@ -89,7 +89,10 @@ class ClientResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('email')
+                Tables\Columns\TextColumn::make('primaryContact.full_name')
+                    ->label(__('Primary Contact')),
+
+                Tables\Columns\TextColumn::make('primaryContact.email')
                     ->label(__('Email')),
 
                 Tables\Columns\TextColumn::make('phone')

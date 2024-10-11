@@ -4,6 +4,7 @@ namespace App\Filament\Resources\ClientResource\Pages;
 
 use App\Filament\Resources\ClientResource;
 use App\Filament\Resources\ContactResource;
+use App\Models\Contact;
 use AymanAlhattami\FilamentPageWithSidebar\Traits\HasPageSidebar;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -45,24 +46,39 @@ class ClientContacts extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('Name')),
+                TextColumn::make('full_name')
+                    ->sortable()
+                    ->searchable()
+                    ->description(function (Contact $record) {
+                        return $record->position;
+                    })
+                    ->label(__('Full Name')),
 
-                TextColumn::make('position')
-                    ->label(__('Position')),
+                TextColumn::make('client.name')
+                    ->sortable()
+                    ->searchable()
+                    ->label(__('Client')),
 
                 ToggleColumn::make('active')
                     ->label(__('Active')),
 
                 TextColumn::make('email')
+                    ->sortable()
+                    ->searchable()
                     ->label(__('Email')),
 
                 TextColumn::make('phone')
+                    ->sortable()
+                    ->searchable()
                     ->label(__('Phone')),
 
+
                 TextColumn::make('last_login_at')
-                    ->label(__('Last Login at'))
                     ->dateTime()
+                    ->description(function (Contact $record) {
+                        return $record->last_login_at->diffForHumans() ?? null;
+                    })
+                    ->label(__('Last Login')),
             ])
             ->headerActions([
                 CreateAction::make()
