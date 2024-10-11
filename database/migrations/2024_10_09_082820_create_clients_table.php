@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('website')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
+            $table->boolean('active')->default(true);
             $table->string('zip_code')->nullable();
             $table->string('country')->nullable();
             $table->unsignedInteger('user_id');

@@ -64,6 +64,12 @@ class ClientResource extends Resource
                     ->label(__('ZIP'))
                     ->maxLength(255),
 
+                Forms\Components\Select::make('groups')
+                    ->label(__('Groups'))
+                    ->multiple()
+                    ->preload()
+                    ->relationship('groups', 'name')
+
 
             ]);
     }

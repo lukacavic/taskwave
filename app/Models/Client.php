@@ -6,6 +6,7 @@ use App\Models\Traits\Organisationable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Activitylog\LogOptions;
@@ -35,6 +36,11 @@ class Client extends BaseModel
     public function tasks(): MorphMany
     {
         return $this->morphMany(Task::class, 'related');
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(ClientGroup::class, 'link_client_groups', 'client_id', 'group_id');
     }
 
     public function contacts(): HasMany
