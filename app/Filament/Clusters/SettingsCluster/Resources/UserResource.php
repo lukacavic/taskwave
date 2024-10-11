@@ -44,6 +44,17 @@ class UserResource extends Resource
                     ->label(__('Phone'))
                     ->tel()
                     ->prefixIcon('heroicon-o-phone'),
+
+                Forms\Components\Split::make([
+                    Forms\Components\Toggle::make('active')
+                        ->label(__('Active'))
+                        ->default(true),
+
+                    Forms\Components\Toggle::make('administrator')
+                        ->label(__('Administrator'))
+                        ->disabled(!auth()->user()->administrator)
+                        ->default(false),
+                ])
             ]);
     }
 
@@ -61,8 +72,21 @@ class UserResource extends Resource
                     ->sortable()
                     ->label(__('Email')),
 
+                Tables\Columns\ToggleColumn::make('administrator')
+                    ->label(__('Administrator'))
+                    ->disabled(!auth()->user()->administrator),
+
                 Tables\Columns\ToggleColumn::make('active')
                     ->label(__('Active')),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->sortable()
+                    ->searchable()
+                    ->dateTime()
+                    ->description(function (User $record) {
+                        return $record->created_at->diffForHumans();
+                    })
+                    ->label(__('Created At')),
             ])
             ->filters([
                 //
