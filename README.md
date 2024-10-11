@@ -92,6 +92,8 @@ https://slippy-surf-wtnb61jj78.ploi.site/app/login
 
 ![](/images/SCR-20241010-jcjv.png)
 
+![](/images/SCR-20241011-hqaa.png)
+
 ## Supporting <small>[↑Top](#about-taskwave)</small>
 
 ### Be a sponsor
