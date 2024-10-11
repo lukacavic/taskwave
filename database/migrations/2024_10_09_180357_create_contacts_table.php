@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('position')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration {
             $table->boolean('active')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->unsignedInteger('organisation_id');
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });

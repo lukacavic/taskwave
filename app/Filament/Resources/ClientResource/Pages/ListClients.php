@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ClientResource\Pages;
 
 use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\ContactResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -26,6 +27,7 @@ class ListClients extends ListRecords
 
             Actions\Action::make('contacts')
                 ->label(__('Contacts'))
+                ->url(ContactResource::getUrl('index'))
                 ->color('gray')
                 ->icon('heroicon-o-user')
         ];

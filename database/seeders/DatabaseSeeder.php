@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Client;
+use App\Models\Contact;
 use App\Models\Contract;
 use App\Models\Event;
 use App\Models\Lead;
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Client::factory()->count(10)->create();
+        Contact::factory()->count(10)->create();
         Lead::factory()->count(10)->create();
         Project::factory()->count(10)->create();
         Contract::factory()->count(10)->create();
