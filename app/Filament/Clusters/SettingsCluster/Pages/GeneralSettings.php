@@ -28,7 +28,7 @@ class GeneralSettings extends Page implements HasForms
 
     protected static ?string $cluster = SettingsCluster::class;
 
-    protected static ?int $navigationSort = 30;
+    protected static ?int $navigationSort = 1;
 
     public static function getNavigationGroup(): ?string
     {
