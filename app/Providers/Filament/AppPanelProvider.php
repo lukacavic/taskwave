@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -58,6 +59,8 @@ class AppPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
+                ActivitylogPlugin::make()
+                    ->navigationGroup(__('Utilities')),
                 QuickCreatePlugin::make(),
                 FilamentDeveloperLoginsPlugin::make()
                     ->enabled()
