@@ -32,8 +32,9 @@ class ContactPanelProvider extends PanelProvider
             ->passwordReset()
             ->databaseNotifications()
             ->topNavigation()
+            ->font('Inter')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#014786',
             ])
             ->discoverResources(in: app_path('Filament/Contact/Resources'), for: 'App\\Filament\\Contact\\Resources')
             ->discoverPages(in: app_path('Filament/Contact/Pages'), for: 'App\\Filament\\Contact\\Pages')
