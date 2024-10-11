@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\App\Resources\ReservationResource;
 use App\Models\Event;
 use App\Models\Reservation;
 use Awcodes\Palette\Forms\Components\ColorPicker;
@@ -67,6 +68,14 @@ class CalendarWidget extends \Guava\Calendar\Widgets\CalendarWidget
                         'start_date' => data_get($arguments, 'dateStr'),
                     ]);
                 })
+        ];
+    }
+
+    public function getEventClickContextMenuActions(): array
+    {
+        return [
+            $this->editAction(),
+            $this->deleteAction()
         ];
     }
 
