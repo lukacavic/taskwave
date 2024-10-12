@@ -21,6 +21,10 @@ class ClientOverview extends Page
         return __('Overview');
     }
 
+    public function like()
+    {
+        dd("e");
+    }
     public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);

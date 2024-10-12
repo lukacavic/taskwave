@@ -2,10 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Contact\Resources\AnnouncementResource;
 use App\Models\Organisation;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -45,6 +47,14 @@ class ContactPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label(__('Announcements'))
+                    ->icon('heroicon-o-bell')
+                    ->url(function () {
+                        return AnnouncementResource::getUrl('index');
+                    })
             ])
             ->middleware([
                 EncryptCookies::class,

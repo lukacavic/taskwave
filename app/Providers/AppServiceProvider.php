@@ -4,9 +4,12 @@ namespace App\Providers;
 
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Select;
+use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Actions\CreateAction as TableCreateAction;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         URL::forceScheme('https');
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::CONTENT_START,
+            fn(): View => view('announcements'),
+        );
 
         $this->customizeFilamentActions();
     }

@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Contact\Resources;
 
-use App\Filament\Resources\AnnouncementResource\Pages;
-use App\Filament\Resources\AnnouncementResource\RelationManagers;
+use App\Filament\Contact\Resources\AnnouncementResource\Pages;
+use App\Filament\Contact\Resources\AnnouncementResource\RelationManagers;
 use App\Models\Announcement;
-use CodeWithDennis\SimpleAlert\Components\Forms\SimpleAlert;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,41 +18,24 @@ class AnnouncementResource extends Resource
 {
     protected static ?string $model = Announcement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bell';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('Utilities');
-    }
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
         return $form
-            ->columns(1)
             ->schema([
-                Forms\Components\TextInput::make('subject')
-                    ->label(__('Title'))
-                    ->required(),
-
-                Forms\Components\RichEditor::make('message')
-                    ->label(__('Content'))
-                    ->required(),
-
-                Forms\Components\Split::make([
-                    Forms\Components\Checkbox::make('show_to_users')
-                        ->label(__('Show to users')),
-
-                    Forms\Components\Checkbox::make('show_to_clients')
-                        ->label(__('Show to clients')),
-
-
-                ])
+                //
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->where('show_to_clients', true)->latest();
+            })
             ->columns([
                 TextColumn::make('subject')
                     ->sortable()
@@ -76,18 +57,6 @@ class AnnouncementResource extends Resource
                         return $model->created_at->diffForHumans();
                     })
                     ->label(__('Created at'))
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 

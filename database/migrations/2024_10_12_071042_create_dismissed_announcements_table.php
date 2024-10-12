@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('dismissed_announcements', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('announcement_id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('contact_id');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('contact_id')->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@
         "awcodes/filament-quick-create": "^3.4",
         "awcodes/palette": "^1.0",
         "aymanalhattami/filament-page-with-sidebar": "^2.5",
+        "codewithdennis/filament-simple-alert": "^3.0",
         "dutchcodingcompany/filament-developer-logins": "^1.2",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",

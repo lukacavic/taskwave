@@ -9,5 +9,6 @@ export default {
         './vendor/awcodes/filament-quick-create/resources/**/*.blade.php',
         './vendor/guava/calendar/resources/**/*.blade.php',
         './vendor/awcodes/palette/resources/views/**/*.blade.php',
+        './vendor/codewithdennis/filament-simple-alert/resources/**/*.blade.php',
     ],
 }
