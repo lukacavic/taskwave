@@ -66,6 +66,7 @@ class AppPanelProvider extends PanelProvider
                     ->navigationGroup(__('Utilities')),
                 QuickCreatePlugin::make(),
                 FilamentDeveloperLoginsPlugin::make()
+                    ->switchable(false)
                     ->enabled()
                     ->users([
                         'Admin' => 'admin@org1.com',
