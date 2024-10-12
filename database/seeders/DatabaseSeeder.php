@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Announcement;
 use App\Models\Client;
 use App\Models\Contact;
 use App\Models\Contract;
@@ -51,5 +52,6 @@ class DatabaseSeeder extends Seeder
         Contract::factory()->count(10)->create();
         Task::factory()->count(10)->create();
         Event::factory()->count(10)->create();
+        Announcement::factory()->count(10)->create();
     }
 }
