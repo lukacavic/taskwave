@@ -58,6 +58,15 @@ class Contact extends Authenticatable implements FilamentUser, HasName, HasTenan
         return $this->belongsToMany(Announcement::class, 'dismissed_announcements', 'contact_id', 'announcement_id');
     }
 
+    public function findLatestAnnouncement(): ?int
+    {
+        return Announcement::whereNotIn('id', function ($query) {
+            $query->select('announcement_id')
+                ->from('dismissed_announcements')
+                ->where('contact_id', auth()->id());
+        })->where('show_to_clients', true)->latest()->first()->id ?? null;
+    }
+
     public function getFilamentName(): string
     {
         return "{$this->first_name} {$this->last_name}";

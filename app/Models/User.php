@@ -80,6 +80,6 @@ class User extends Authenticatable implements FilamentUser
             $query->select('announcement_id')
                 ->from('dismissed_announcements')
                 ->where('user_id', auth()->id());
-        })->latest()->first()->id ?? null;
+        })->where('show_to_users', true)->latest()->first()->id ?? null;
     }
 }

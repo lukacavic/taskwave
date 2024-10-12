@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Announcement;
+use App\Models\Contact;
+use App\Models\User;
 use DB;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
@@ -23,10 +25,19 @@ class AnnouncementBlock extends Component
 
     public function markAsRead()
     {
-        DB::table('dismissed_announcements')->insert([
-            'announcement_id' => $this->announcement->id,
-            'user_id' => auth()->id(),
-        ]);
+        if (auth()->user() instanceof User) {
+            DB::table('dismissed_announcements')->insert([
+                'announcement_id' => $this->announcement->id,
+                'user_id' => auth()->id(),
+            ]);
+        }
+
+        if (auth()->user() instanceof Contact) {
+            DB::table('dismissed_announcements')->insert([
+                'announcement_id' => $this->announcement->id,
+                'contact_id' => auth()->id(),
+            ]);
+        }
 
         $this->hidden = true;
     }
