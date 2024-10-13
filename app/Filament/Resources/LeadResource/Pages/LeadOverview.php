@@ -126,8 +126,6 @@ class LeadOverview extends Page implements HasInfolists
     protected function getHeaderActions(): array
     {
         return [
-
-
             ActionGroup::make([
                 Action::make('mark-as-lost')
                     ->visible(function (Lead $record) {
@@ -146,6 +144,11 @@ class LeadOverview extends Page implements HasInfolists
                 Action::make('mark-as-junk')
                     ->visible(function (Lead $record) {
                         return !$record->lost;
+                    })
+                    ->action(function () {
+                        $this->record->update([
+                            'junk' => !$this->record->junk
+                        ]);
                     })
                     ->icon('heroicon-o-archive-box-x-mark')
                     ->label(function (Lead $record) {
