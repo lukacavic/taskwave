@@ -9,6 +9,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\SpatieTagsEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
@@ -39,7 +40,15 @@ class LeadOverview extends Page implements HasInfolists
                     ->label(__('Source')),
 
                 TextEntry::make('assignedUser.full_name')
-                    ->label(__('Assigned User'))
+                    ->label(__('Assigned User')),
+
+                SpatieTagsEntry::make('tags')
+                    ->label(__('Tags')),
+
+                TextEntry::make('created_at')
+                    ->dateTime()
+                    ->since()
+                    ->label(__('Created At')),
             ]);
     }
 
@@ -49,7 +58,23 @@ class LeadOverview extends Page implements HasInfolists
             ->columnSpan(1)
             ->columns(1)
             ->schema([
-                TextEntry::make('company')
+                TextEntry::make('name')
+                    ->label(__('Name')),
+
+                TextEntry::make('position')
+                    ->label(__('Position')),
+
+                TextEntry::make('email')
+                    ->label(__('Email')),
+
+                TextEntry::make('phone')
+                    ->label(__('Phone')),
+
+                TextEntry::make('website')
+                    ->label(__('Website')),
+
+                TextEntry::make('full_address')
+                    ->label(__('Address')),
             ]);
     }
 
@@ -65,7 +90,12 @@ class LeadOverview extends Page implements HasInfolists
             ->schema([
                 Grid::make(2)->schema([
                     self::leadInformationSection(),
-                    self::generalInformationSection()
+
+                    self::generalInformationSection(),
+
+                    TextEntry::make('description')
+                        ->columnSpanFull()
+                        ->label(__('Description')),
                 ])
             ]);
     }

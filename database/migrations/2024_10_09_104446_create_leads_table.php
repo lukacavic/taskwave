@@ -23,6 +23,9 @@ return new class extends Migration {
             $table->timestamp('client_converted_at')->nullable();
             $table->integer('status_id')->nullable();
             $table->integer('source_id')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip_code')->nullable();
             $table->string('country')->nullable();
             $table->string('website')->nullable();
             $table->integer('assigned_user_id')->nullable();

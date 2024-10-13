@@ -67,7 +67,7 @@ class EmailSettings extends Page implements HasForms
                     ->columns(2)
                     ->schema([
                         ToggleButtons::make('email_enabled')
-                            ->boolean('Da', 'Ne')
+                            ->boolean(__('Yes'), __('No'))
                             ->label(__('Enable SMTP integration'))
                             ->default(false)
                             ->reactive()
