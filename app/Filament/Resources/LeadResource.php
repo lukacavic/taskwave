@@ -245,47 +245,14 @@ class LeadResource extends Resource
                         return request()->routeIs(LeadNotes::getRouteName());
                     }),
 
-                /*PageNavigationItem::make(__('Contacts'))
-                    ->badge(function () use ($record) {
-                        return $record->contacts->count();
-                    })
-                    ->icon('heroicon-o-users')
-                    ->url(function () use ($record) {
-                        return static::getUrl('contacts', ['record' => $record->id]);
-                    })
-                    ->isActiveWhen(function () {
-                        return request()->routeIs(ClientContacts::getRouteName());
-                    }),
-
-
-
-
                 PageNavigationItem::make(__('Documents'))
                     ->icon('heroicon-o-paper-clip')
                     ->url(function () use ($record) {
                         return static::getUrl('documents', ['record' => $record->id]);
                     })
                     ->isActiveWhen(function () {
-                        return request()->routeIs(ClientDocuments::getRouteName());
+                        return request()->routeIs(Pages\LeadDocuments::getRouteName());
                     }),
-
-                PageNavigationItem::make(__('Tasks'))
-                    ->icon('heroicon-o-rectangle-stack')
-                    ->url(function () use ($record) {
-                        return static::getUrl('tasks', ['record' => $record->id]);
-                    })
-                    ->isActiveWhen(function () {
-                        return request()->routeIs(ClientTasks::getRouteName());
-                    }),
-
-                PageNavigationItem::make(__('Contracts'))
-                    ->icon('heroicon-o-document-chart-bar')
-                    ->url(function () use ($record) {
-                        return static::getUrl('contracts', ['record' => $record->id]);
-                    })
-                    ->isActiveWhen(function () {
-                        return request()->routeIs(ClientContracts::getRouteName());
-                    }),*/
             ]);
     }
 
@@ -297,6 +264,7 @@ class LeadResource extends Resource
             //'edit' => Pages\EditLead::route('/{record}/edit'),
             'overview' => LeadOverview::route('/{record}/overview'),
             'notes' => LeadNotes::route('/{record}/notes'),
+            'documents' => Pages\LeadDocuments::route('/{record}/documents'),
         ];
     }
 }

@@ -25,6 +25,11 @@ class Lead extends BaseModel
         return $this->belongsTo(User::class, 'assigned_user_id');
     }
 
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'related');
+    }
+
     public function notes(): MorphMany
     {
         return $this->morphMany(Note::class, 'related');
