@@ -3,10 +3,14 @@
 namespace App\Filament\Resources\LeadResource\Pages;
 
 use App\Filament\Resources\LeadResource;
+use App\Models\Lead;
 use AymanAlhattami\FilamentPageWithSidebar\Traits\HasPageSidebar;
+use CodeWithDennis\SimpleAlert\Components\Infolists\SimpleAlert;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Placeholder;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\SpatieTagsEntry;
@@ -17,6 +21,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 
 class LeadOverview extends Page implements HasInfolists
 {
@@ -89,6 +94,24 @@ class LeadOverview extends Page implements HasInfolists
             ->record($this->record)
             ->schema([
                 Grid::make(2)->schema([
+                    SimpleAlert::make('junk-notification')
+                        ->danger()
+                        ->border(true)
+                        ->columnSpanFull()
+                        ->title(__('This lead is marked as junk'))
+                        ->visible(function (Lead $record) {
+                            return $record->junk;
+                        }),
+
+                    SimpleAlert::make('lost-notification')
+                        ->warning()
+                        ->border(true)
+                        ->columnSpanFull()
+                        ->title(__('This lead is marked as lost'))
+                        ->visible(function (Lead $record) {
+                            return $record->lost;
+                        }),
+
                     self::leadInformationSection(),
 
                     self::generalInformationSection(),
@@ -103,21 +126,39 @@ class LeadOverview extends Page implements HasInfolists
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('convert')
-                ->label(__('Convert to client'))
-                ->icon('heroicon-o-user')
-                ->color('success'),
 
-            EditAction::make()
-                ->hiddenLabel()
-                ->icon('heroicon-o-pencil')
-                ->form(function ($form) {
-                    return LeadResource::form($form);
-                }),
 
-            DeleteAction::make()
-                ->hiddenLabel()
-                ->icon('heroicon-o-trash')
+            ActionGroup::make([
+                Action::make('mark-as-lost')
+                    ->visible(function (Lead $record) {
+                        return !$record->junk;
+                    })
+                    ->action(function () {
+                        $this->record->update([
+                            'lost' => !$this->record->lost
+                        ]);
+                    })
+                    ->icon('heroicon-o-archive-box-arrow-down')
+                    ->label(function (Lead $record) {
+                        return $record->lost ? __('Unmark as lost') : __('Mark as lost');
+                    }),
+
+                Action::make('mark-as-junk')
+                    ->visible(function (Lead $record) {
+                        return !$record->lost;
+                    })
+                    ->icon('heroicon-o-archive-box-x-mark')
+                    ->label(function (Lead $record) {
+                        return $record->junk ? __('Unmark as junk') : __('Mark as junk');
+                    }),
+
+                DeleteAction::make()
+                    ->icon('heroicon-o-trash')
+            ])->label(__('More'))
+                ->color('gray')
+                ->button(),
+
+
         ];
     }
 
