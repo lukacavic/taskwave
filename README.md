@@ -94,6 +94,8 @@ https://slippy-surf-wtnb61jj78.ploi.site/app/login
 
 ![](/images/SCR-20241011-hqaa.png)
 
+![](/images/Screenshot_49.png)
+
 ***Client Portal***
 
 ![](/images/SCR-20241011-jwuc.png)
