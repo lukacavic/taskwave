@@ -22,7 +22,7 @@
     @endif
 
     @if($activeTab == "tasks")
-        @livewire('tables.tasks', ['relatedType' => \App\Models\Ticket::class, 'relatedId' => $ticket->id])
+        @livewire('tables.tasks-table', ['relatedType' => \App\Models\Ticket::class, 'relatedId' => $ticket->id])
     @endif
 
     @if($ticket->replies()->exists())
