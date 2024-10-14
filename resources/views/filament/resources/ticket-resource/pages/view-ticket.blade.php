@@ -22,16 +22,11 @@
     @endif
 
     @if($activeTab == "tasks")
-        <x-filament::section>
-            <x-slot name="heading">
-                Tasks
-            </x-slot>
-
-        </x-filament::section>
+        @livewire('tables.tasks', ['relatedType' => \App\Models\Ticket::class, 'relatedId' => $ticket->id])
     @endif
 
     @if($ticket->replies()->exists())
-        @foreach($ticket->replies as $reply)
+        @foreach($ticket->replies()->latest()->get() as $reply)
             <x-filament::section compact>
                 <div>
                     <b>{{$reply->creator_name}}</b>

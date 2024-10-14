@@ -4,12 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TicketReply extends BaseModel
 {
     use HasFactory;
+
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::created(function ($ticketReply) {
+            $ticketReply->ticket->update([
+                'last_reply_at' => now()
+            ]);
+        });
+    }
 
     public function creatorName(): Attribute
     {
@@ -20,6 +30,11 @@ class TicketReply extends BaseModel
 
             return $this->user->full_name;
         });
+    }
+
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 
     public function contact(): BelongsTo

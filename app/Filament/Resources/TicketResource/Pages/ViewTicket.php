@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TicketResource\Pages;
 
 use App\Filament\Resources\TicketResource;
+use App\Models\Task;
 use App\Models\TicketPredefinedReply;
 use App\TicketStatus;
 use Filament\Actions\Action;
@@ -15,10 +16,16 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Enums\ActionSize;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 
 class ViewTicket extends Page implements HasForms
 {
@@ -59,7 +66,9 @@ class ViewTicket extends Page implements HasForms
                             ->label(__('Reply')),
 
                         Select::make('status_id')
+                            ->default($this->record->status_id)
                             ->required()
+                            ->selectablePlaceholder(false)
                             ->options(TicketStatus::class)
                             ->label(__('Change Status')),
 
@@ -87,7 +96,21 @@ class ViewTicket extends Page implements HasForms
     {
         $data = $this->getForm('replyForm')->getState();
 
-        dd($data);
+        $this->record->replies()->create([
+            'user_id' => auth()->id(),
+            'content' => $data['reply'],
+        ]);
+
+        $this->record->update([
+            'last_reply_at' => now()
+        ]);
+
+        Notification::make()
+            ->success()
+            ->title(__('Reply added'))
+            ->send();
+
+        $this->replyForm->fill();
     }
 
     public function setActiveTab(string $tab): void
@@ -98,6 +121,11 @@ class ViewTicket extends Page implements HasForms
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('subscribe')
+                ->label(__('Subscribe'))
+                ->icon('heroicon-o-bell')
+                ->color('success'),
+
             ActionGroup::make([
                 Action::make('test')
             ])->label('Open')
