@@ -3,12 +3,23 @@
 <x-filament-panels::page>
 
     <x-filament::tabs>
-        <x-filament::tabs.item active="{{$activeTab == 'reply'}}" icon="heroicon-o-chat-bubble-bottom-center-text"
-                               wire:click="setActiveTab('reply')"> Add Reply
+        <x-filament::tabs.item active="{{$activeTab == 'reply'}}"
+                               icon="heroicon-o-chat-bubble-bottom-center-text"
+                               wire:click="setActiveTab('reply')"> {{__('Add Reply')}}
         </x-filament::tabs.item>
-        <x-filament::tabs.item active="{{$activeTab == 'tasks'}}" icon="heroicon-o-rectangle-stack"
-                               wire:click="setActiveTab('tasks')">Tasks
+
+        <x-filament::tabs.item active="{{$activeTab == 'notes'}}"
+                               icon="heroicon-o-pencil-square"
+                               badge="{{$ticket->notes()->count()}}"
+                               wire:click="setActiveTab('notes')">{{__('Notes')}}
         </x-filament::tabs.item>
+
+        <x-filament::tabs.item active="{{$activeTab == 'tasks'}}"
+                               icon="heroicon-o-rectangle-stack"
+                               badge="{{$ticket->tasks()->count()}}"
+                               wire:click="setActiveTab('tasks')">{{__('Tasks')}}
+        </x-filament::tabs.item>
+
     </x-filament::tabs>
 
     @if($activeTab == "reply")
@@ -22,7 +33,11 @@
     @endif
 
     @if($activeTab == "tasks")
-        @livewire('tables.tasks-table', ['relatedType' => \App\Models\Ticket::class, 'relatedId' => $ticket->id])
+        <livewire:tables.tasks-table :related-id="$ticket->id" :related-type="$ticket::class"/>
+    @endif
+
+    @if($activeTab == "notes")
+        <livewire:tables.notes-table :related-id="$ticket->id" :related-type="$ticket::class"/>
     @endif
 
     @if($ticket->replies()->exists())

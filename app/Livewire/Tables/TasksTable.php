@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Tables;
 
+use App\Filament\Forms\TaskForm;
+use App\Filament\Resources\TaskResource;
 use App\Models\Task;
 use App\TaskStatus;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
@@ -75,7 +78,19 @@ class TasksTable extends Component implements HasForms, HasTable
                 //
             ])
             ->actions([
-                //
+                Tables\Actions\ViewAction::make()
+                    ->model(Task::class)
+                    ->form(function ($form) {
+                        return TaskForm::make($form);
+                    }),
+
+                Tables\Actions\EditAction::make()
+                    ->model(Task::class)
+                    ->form(function ($form) {
+                        return TaskForm::make($form);
+                    }),
+
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
