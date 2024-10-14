@@ -14,13 +14,23 @@ class Ticket extends BaseModel implements HasMedia
 {
     use HasFactory, HasTags, InteractsWithMedia;
 
-    protected static function booted()
+    protected static function booted(): void
     {
         parent::booted();
 
-        static::created(function ($ticket) {
-            $ticket->status_id = TicketStatus::OPEN;
+        static::creating(function ($ticket) {
+            $ticket->status_id = TicketStatus::Open;
         });
+    }
+
+    public function assignedUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
     }
 
     public function department(): BelongsTo

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('body');
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('contact_id')->nullable();
-            $table->unsignedInteger('priority_id')->nullable();
-            $table->unsignedInteger('status_id')->nullable();
+            $table->unsignedInteger('priority_id');
+            $table->unsignedInteger('status_id');
+            $table->unsignedInteger('assigned_user_id')->nullable();
             $table->unsignedInteger('organisation_id');
             $table->softDeletes();
             $table->timestamps();

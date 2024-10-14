@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\LeadResource\Pages;
 
+use App\Filament\Forms\DocumentForm;
 use App\Filament\Resources\ClientResource;
 use App\Filament\Resources\LeadResource;
 use App\Models\Document;
@@ -33,20 +34,7 @@ class LeadDocuments extends ManageRelatedRecords
 
     public function form(Form $form): Form
     {
-        return $form
-            ->columns(1)
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label(__('Name'))
-                    ->required()
-                    ->maxLength(255),
-
-                Forms\Components\SpatieMediaLibraryFileUpload::make('attachments')
-                    ->multiple()
-                    ->required()
-                    ->label(__('Attachments'))
-                    ->downloadable()
-            ]);
+        return DocumentForm::make($form);
     }
 
     public function table(Table $table): Table
