@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Select;
 use Filament\Support\Facades\FilamentView;
@@ -32,6 +33,13 @@ class AppServiceProvider extends ServiceProvider
             PanelsRenderHook::CONTENT_START,
             fn(): View => view('announcements'),
         );
+
+        \BezhanSalleh\PanelSwitch\PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $panelSwitch->panels([
+                'project',
+                'app',
+            ]);
+        });
 
         $this->customizeFilamentActions();
     }
